@@ -1,0 +1,70 @@
+<div class="d-flex align-items-center">
+  <div class="col-5"><h4>View Projects</h4></div>
+  <div class="col-md-7">
+    <mat-form-field appearance="outline">
+      <mat-label>Filter Projects</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Projects">
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="projectDesc">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="Name"> {{row.projectDesc}} </mat-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="taskCount">
+      <mat-header-cell *matHeaderCellDef> No. Of Tasks </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="No. Of Tasks"> {{row.taskCount}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="taskCompleted">
+      <mat-header-cell *matHeaderCellDef> Tasks Completed </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="Tasks Completed"> {{row.taskCompleted}} </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="Start Date"> {{row.startDate}} </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="End Date"> {{row.endDate}} </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="priority">
+      <mat-header-cell *matHeaderCellDef> Priority </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="Priority"> {{row.priority}} </mat-cell>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let row" data-label="Actions">
+        <button mat-icon-button (click)="editProject(row)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button mat-raised-button color="accent" (click)="suspendProject(row)">
+          <ng-container *ngIf="!row['inactive']">Suspend</ng-container>
+          <ng-container *ngIf="row['inactive']">Unsuspend</ng-container>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+</div>
